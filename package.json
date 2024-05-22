@@ -1,0 +1,48 @@
+{
+    "name": "simple-jsx-react-starter",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "concurrently --kill-others \"npm run vite:dev\" \"npm run nodemon\"",
+        "nodemon": "nodemon api.cjs",
+        "build": "vite build",
+        "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "vite:preview": "vite preview",
+        "preview": "vite preview --host --port 5173",
+        "start": "concurrently --kill-others \"npm run preview\" \"npm run nodemon\"",
+        "vite:dev": "vite --host"
+    },
+    "dependencies": {
+        "@radix-ui/react-dialog": "^1.0.5",
+        "@radix-ui/react-dropdown-menu": "^2.0.6",
+        "@radix-ui/react-navigation-menu": "^1.1.4",
+        "@radix-ui/react-slot": "^1.0.2",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.1",
+        "cors": "^2.8.5",
+        "express": "^4.19.2",
+        "lucide-react": "^0.376.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.23.0",
+        "tailwind-merge": "^2.3.0",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
+        "@types/node": "^20.12.7",
+        "@types/react": "^18.2.66",
+        "@types/react-dom": "^18.2.22",
+        "@vitejs/plugin-react": "^4.2.1",
+        "autoprefixer": "^10.4.19",
+        "concurrently": "^8.2.2",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.34.1",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.6",
+        "nodemon": "^3.1.0",
+        "postcss": "^8.4.38",
+        "sass": "^1.75.0",
+        "tailwindcss": "^3.4.3",
+        "vite": "^5.2.0"
+    }
+}
