@@ -47,6 +47,8 @@ const getTotalHours = date => {
 	const dateData = db.has(date) ? db.get(date)['hours'] : [];
 	let totalHours = 0;
 
+	if (dateData.length == 0) return 0;
+
 	dateData.forEach(entry => {
 		totalHours += entry;
 	});
@@ -64,6 +66,8 @@ const getLastClockIn = date => {
 	return db.has(date) ? db.get(date)['last_clock_in'] : null;
 };
 
+const HOURLY_PAY = 12;
+
 const getDaySummary = _date => {
 	const targetDate = formatDateString(_date);
 
@@ -74,9 +78,19 @@ const getDaySummary = _date => {
 		month: targetDate.getMonth(),
 		monthString: targetDate.toLocaleString('default', { month: 'short' }),
 		year: targetDate.getFullYear(),
+		unix: targetDate.getTime(),
+		dayOfTheMonth: targetDate.getDate(),
+
+		title: targetDate.toLocaleString('default', { weekday: 'short' }),
+		description:
+			targetDate.toLocaleString('default', { month: 'short' }) +
+			' ' +
+			targetDate.getDate(),
+
 		totalHours: getTotalHours(targetDate),
 		eventLog: getEventLog(targetDate),
 		lastClockIn: getLastClockIn(targetDate),
+		pay: getTotalHours(targetDate) * HOURLY_PAY,
 	};
 };
 
@@ -85,17 +99,44 @@ app.get('/day-summary/:date', (req, res) => {
 	res.status(200).json(returnData);
 });
 
-app.get('/week-summary/:date', (req, res) => {
-	const targetDate = formatDateString(req.params.date);
+const getWeekSummary = _date => {
 	const week = [];
 
 	for (let i = 0; i < 7; i++) {
-		const date = new Date(targetDate);
+		const date = new Date(_date);
 		date.setDate(date.getDate() - date.getDay() + 1 + i);
 		week.push(getDaySummary(date));
 	}
 
+	return week;
+};
+
+app.get('/week-summary/:date', (req, res) => {
+	const targetDate = formatDateString(req.params.date);
+	const week = getWeekSummary(targetDate);
+
 	res.status(200).json(week);
+});
+
+app.get('/week-total/:date', (req, res) => {
+	const targetDate = formatDateString(req.params.date);
+	const week = getWeekSummary(targetDate);
+	let totalHours = 0;
+
+	week.forEach(day => {
+		totalHours += day.totalHours;
+	});
+
+	let totalPay = totalHours * HOURLY_PAY;
+
+	res.status(200).json({ totalHours, totalPay });
+});
+
+app.get('/last-clock-in/:date', (req, res) => {
+	const targetDate = formatDateString(req.params.date);
+	const lastClockIn = getLastClockIn(targetDate);
+
+	res.status(200).json({ lastClockIn });
 });
 
 app.post('/clock-in', (req, res) => {

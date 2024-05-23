@@ -19,7 +19,7 @@ const ROUTER = (
 			<LocalStorageProvider>
 				<BrowserRouter>
 					<div className="h-full flex flex-col">
-						<main className="flex-grow">
+						<main className="overflow-y-hidden flex-grow flex flex-col">
 							<Routes>
 								<Route path="/" element={<App />} />
 							</Routes>
