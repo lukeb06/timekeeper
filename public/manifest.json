@@ -1,0 +1,14 @@
+{
+	"name": "Timekeeper",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "vite.svg",
+			"sizes": "48x48",
+			"type": "image/svg"
+		}
+	],
+	"display": "standalone",
+	"theme_color": "#000000",
+	"background_color": "#ffffff"
+}

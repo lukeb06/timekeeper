@@ -9,8 +9,7 @@ import { StoreProvider } from '@/hooks/use-store.jsx';
 import { LocalStorageProvider } from '@/hooks/use-local-storage.jsx';
 
 import App from '@/Pages/App.jsx';
-
-import Navbar from '@/Components/Navbar.jsx';
+import Navbar from '@/Components/Navbar';
 
 const ROOT = document.getElementById('root');
 
@@ -19,10 +18,16 @@ const ROUTER = (
 		<StoreProvider>
 			<LocalStorageProvider>
 				<BrowserRouter>
-					<Navbar />
-					<Routes>
-						<Route path="/" element={<App />} />
-					</Routes>
+					<div className="h-full flex flex-col">
+						<main className="flex-grow">
+							<Routes>
+								<Route path="/" element={<App />} />
+							</Routes>
+						</main>
+						{/* <footer className="h-fit">
+							<Navbar />
+						</footer> */}
+					</div>
 				</BrowserRouter>
 			</LocalStorageProvider>
 		</StoreProvider>
