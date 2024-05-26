@@ -23,5 +23,7 @@ module.exports = {
 		'no-inner-declarations': 'off',
 		'react-hooks/exhaustive-deps': 'off',
 		'no-async-promise-executor': 'off',
+		'react/react-in-jsx-scope': 'off',
+		'no-mixed-spaces-and-tabs': 'off',
 	},
 };

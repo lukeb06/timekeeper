@@ -23,7 +23,12 @@ const WeekContainer = ({ date, className }) => {
 };
 
 export const WeekCard = ({ date, className }) => {
-	const { data, error, loading } = useAPI(`week-total/${date}`);
+	const [store, setStore] = useStore();
+	const { data, error, loading, doRefresh } = useAPI(`week-total/${date}`);
+
+	useEffect(() => {
+		doRefresh();
+	}, [store.forceRefresh]);
 
 	return (
 		<div

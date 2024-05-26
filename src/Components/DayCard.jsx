@@ -17,6 +17,9 @@ import fetcher from '@/Utils/fetcher.js';
 
 import { useStore } from '@/hooks/use-store.jsx';
 
+import ViewDetails from '@/Components/ViewDetails.jsx';
+import EditHours from '@/Components/EditHours.jsx';
+
 const DayCard = ({ daySummary, featured, refresh }) => {
 	const [store, setStore] = useStore();
 
@@ -33,7 +36,8 @@ const DayCard = ({ daySummary, featured, refresh }) => {
 		e.target.disabled = false;
 
 		doRefresh();
-		store.clockRefresh();
+		if (store.clockRefresh) store.clockRefresh();
+		setStore('forceRefresh', Math.random());
 	};
 
 	const clockOut = async e => {
@@ -46,8 +50,15 @@ const DayCard = ({ daySummary, featured, refresh }) => {
 
 		refresh();
 		doRefresh();
-		store.clockRefresh();
+		if (store.clockRefresh) store.clockRefresh();
+		setStore('forceRefresh', Math.random());
 	};
+
+	useEffect(() => {
+		if (doRefresh) doRefresh();
+		if (refresh) refresh();
+		if (store.clockRefresh) store.clockRefresh();
+	}, [store.forceRefresh]);
 
 	return (
 		<div className="p-4 h-fit max-w-[400px] min-w-[300px]">
@@ -68,7 +79,11 @@ const DayCard = ({ daySummary, featured, refresh }) => {
 					{featured ? (
 						data && !loading && !error ? (
 							<>
-								<Button variant="outline">View Details</Button>
+								<ViewDetails daySummary={daySummary}>
+									<Button variant="outline">
+										View Details
+									</Button>
+								</ViewDetails>
 								{data.lastClockIn ? (
 									<Button onClick={clockOut}>
 										Clock Out
@@ -82,8 +97,12 @@ const DayCard = ({ daySummary, featured, refresh }) => {
 						)
 					) : (
 						<>
-							<Button>View Details</Button>
-							<Button variant="outline">Edit Hours</Button>
+							<ViewDetails daySummary={daySummary}>
+								<Button>View Details</Button>
+							</ViewDetails>
+							<EditHours daySummary={daySummary}>
+								<Button variant="outline">Edit Hours</Button>
+							</EditHours>
 						</>
 					)}
 				</CardFooter>

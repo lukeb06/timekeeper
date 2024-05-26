@@ -16,8 +16,15 @@ const ClockSummary = ({ date }) => {
 
 		if (doRefresh) {
 			setStore('clockRefresh', doRefresh);
+			setStore('forceRefresh', Math.random());
 
-			interval = setInterval(doRefresh, 1000);
+			interval = setInterval(() => {
+				doRefresh();
+
+				if (data?.lastClockIn != null) {
+					setStore('forceRefresh', Math.random());
+				}
+			}, 1000);
 
 			return () => clearInterval(interval);
 		}

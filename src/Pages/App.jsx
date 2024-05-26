@@ -24,6 +24,7 @@ const App = () => {
 				</div>
 			)}
 			{/* <DynamicWeek date={Date.now()} /> */}
+
 			<ClockSummary date={Date.now()} />
 		</>
 	);
