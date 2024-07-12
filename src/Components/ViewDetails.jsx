@@ -34,7 +34,7 @@ export default function ViewDetails({ children, daySummary }) {
 				<DialogTrigger asChild>{children}</DialogTrigger>
 				<DialogContent className="sm:max-w-[425px]">
 					<div>
-						{daySummary.eventLog.length > 0 ? (
+						{daySummary?.eventLog?.length > 0 ? (
 							<ul className="px-10 py-3">
 								{[...daySummary.eventLog]
 									.reverse()
@@ -73,7 +73,7 @@ export default function ViewDetails({ children, daySummary }) {
 				</DrawerHeader>
 
 				<div className="pb-10">
-					{daySummary.eventLog.length > 0 ? (
+					{daySummary?.eventLog?.length > 0 ? (
 						<ul className="px-10 py-3">
 							{[...daySummary.eventLog]
 								.reverse()

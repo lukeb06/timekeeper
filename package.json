@@ -13,6 +13,7 @@
 		"vite:dev": "vite --host"
 	},
 	"dependencies": {
+		"@google-cloud/local-auth": "^2.1.0",
 		"@radix-ui/react-dialog": "^1.0.5",
 		"@radix-ui/react-dropdown-menu": "^2.0.6",
 		"@radix-ui/react-label": "^2.0.2",
@@ -22,6 +23,7 @@
 		"clsx": "^2.1.1",
 		"cors": "^2.8.5",
 		"express": "^4.19.2",
+		"googleapis": "^105.0.0",
 		"lucide-react": "^0.376.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
@@ -51,7 +53,9 @@
 	},
 	"nodemonConfig": {
 		"ignore": [
-			"db.json"
+			"db.json",
+			"schedule.json",
+			"token.json"
 		]
 	}
 }

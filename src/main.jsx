@@ -9,6 +9,9 @@ import { StoreProvider } from '@/hooks/use-store.jsx';
 import { LocalStorageProvider } from '@/hooks/use-local-storage.jsx';
 
 import App from '@/Pages/App.jsx';
+import SchedulePage from '@/Pages/SchedulePage.jsx';
+import CreateSchedule from '@/Pages/CreateSchedule.jsx';
+
 import Navbar from '@/Components/Navbar';
 
 const ROOT = document.getElementById('root');
@@ -22,6 +25,14 @@ const ROUTER = (
 						<main className="overflow-y-hidden flex-grow flex flex-col">
 							<Routes>
 								<Route path="/" element={<App />} />
+								<Route
+									path="/schedule"
+									element={<SchedulePage />}
+								/>
+								<Route
+									path="/schedule/create"
+									element={<CreateSchedule />}
+								/>
 							</Routes>
 						</main>
 						{/* <footer className="h-fit">

@@ -60,6 +60,27 @@ const DayCard = ({ daySummary, featured, refresh }) => {
 		if (store.clockRefresh) store.clockRefresh();
 	}, [store.forceRefresh]);
 
+	const editHours = async () => {
+		const hrs = prompt('Enter the new hours worked:');
+		if (hrs === null) return;
+		if (isNaN(hrs)) return alert('Please enter a valid number.');
+
+		const response = await fetcher('edit-hours', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				date: daySummary.unix,
+				hours: +hrs,
+			}),
+		});
+
+		if (response.error) return alert(response.error);
+
+		setStore('forceRefresh', Math.random());
+	};
+
 	return (
 		<div className="p-4 h-fit max-w-[400px] min-w-[300px]">
 			<Card>
@@ -67,12 +88,12 @@ const DayCard = ({ daySummary, featured, refresh }) => {
 					<CardTitle>
 						{featured ? 'Today' : daySummary.title}
 					</CardTitle>
-					<CardDescription>{daySummary.description}</CardDescription>
+					<CardDescription>{daySummary?.description}</CardDescription>
 				</CardHeader>
 
 				<CardContent className="text-lg">
-					<p>Pay: ${(+daySummary.pay).toFixed(2)}</p>
-					<p>Hours Worked: {(+daySummary.totalHours).toFixed(1)}</p>
+					<p>Pay: ${(+daySummary?.pay).toFixed(2)}</p>
+					<p>Hours Worked: {(+daySummary?.totalHours).toFixed(1)}</p>
 				</CardContent>
 
 				<CardFooter className="flex flex-row justify-between">
@@ -100,9 +121,9 @@ const DayCard = ({ daySummary, featured, refresh }) => {
 							<ViewDetails daySummary={daySummary}>
 								<Button>View Details</Button>
 							</ViewDetails>
-							<EditHours daySummary={daySummary}>
-								<Button variant="outline">Edit Hours</Button>
-							</EditHours>
+							<Button onClick={editHours} variant="outline">
+								Edit Hours
+							</Button>
 						</>
 					)}
 				</CardFooter>
