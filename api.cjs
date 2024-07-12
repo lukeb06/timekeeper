@@ -396,7 +396,7 @@ app.get('/wakeup-time', (req, res) => {
 		return res.status(400).json({ error: 'No schedule found' });
 
 	// Subtract 1 hour and 35 minutes from work start time
-	const wakeupDate = new Date(workStartTime - 1.583 * 60 * 60 * 1000);
+	const wakeupDate = new Date(workStartTime - 1.6 * 60 * 60 * 1000);
 
 	const wakeupTime = wakeupDate.toLocaleTimeString('en-US', {
 		hour: 'numeric',
